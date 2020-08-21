@@ -1,0 +1,48 @@
+.ebookworm-search-amazon .a-icon {
+  background-image: url("http://g-ecx.images-amazon.com/images/G/01/amazonui/sprites/aui_sprite_0036-1x._V1_.png");
+  background-repeat: no-repeat;
+  background-size: 400px 650px;
+  display: inline-block;
+}
+.ebookworm-search-amazon .a-icon-star{
+  position: relative;
+  vertical-align: text-top;
+  width: 80px;
+  height: 18px;
+}
+.ebookworm-search-amazon .a-star-5{background-position:-5px -368px}
+.ebookworm-search-amazon .a-star-4{background-position:-21px -368px}
+.ebookworm-search-amazon .a-star-3{background-position:-37px -368px}
+.ebookworm-search-amazon .a-star-2{background-position:-53px -368px}
+.ebookworm-search-amazon .a-star-1{background-position:-69px -368px}
+.ebookworm-search-amazon .a-star-0{background-position:-85px -368px}
+.ebookworm-search-amazon .a-star-4-5{background-position:-175px -368px}
+.ebookworm-search-amazon .a-star-3-5{background-position:-191px -368px}
+.ebookworm-search-amazon .a-star-2-5{background-position:-207px -368px}
+.ebookworm-search-amazon .a-star-1-5{background-position:-223px -368px}
+.ebookworm-search-amazon .a-star-0-5{background-position:-239px -368px}
+
+.ebookworm-block { display: none; }
+.ebookworm-like { background-color: #afa; }
+
+/* override mobilism.org */
+.jumbotron {
+  padding: 10px !important;
+}
+header .leftArea .logo {
+  font-size: 28px !important;
+}
+header .leftArea .site-info {
+  font-size: 8px !important;
+  padding-top: 0 !important;
+  padding-bottom: 10px !important;
+}
+.mainnav > ul > li > a {
+  font-size: 16px !important;
+}
+.mainnav > ul > li {
+  margin-bottom: 0 !important;
+}
+section.social-top {
+  display: none;
+}

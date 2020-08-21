@@ -1,0 +1,27 @@
+{
+  "name": "eBookworm",
+  "version": "1",
+  "manifest_version": 2,
+  "description": "Better mobilism.org",
+  "icons": {
+    "16": "icon-16.png",
+    "48": "icon-48.png",
+    "128": "icon-128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+                  "https://*.mobilism.org/viewforum.php*"
+                 ],
+      "css": ["ebookworm.css"],
+      "js": ["ellab-utils.js", "ebookworm.user.js"]
+    }
+  ],
+  "minimum_chrome_version": "20",
+  "permissions": [
+    "https://www.amazon.com/",
+    "*://*.amazon.com/*",
+    "storage"
+  ],
+  "web_accessible_resources": ["loading.gif"]
+}
