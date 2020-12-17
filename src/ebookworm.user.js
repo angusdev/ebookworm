@@ -215,11 +215,11 @@ function mobilismMagazineFilter() {
     var blockCount = 0;
     var blacklistSize = items.blacklist?items.blacklist.length:0;
     var whitelistSize = items.whitelist?items.whitelist.length:0;
-    document.querySelectorAll('#page-body > main > table')[1].querySelectorAll('a.topictitle').forEach(function(v, i) {
+    document.querySelectorAll('div.padding_0_40 main > table')[1].querySelectorAll('a.topictitle').forEach(function(v, i) {
       var bookname = v.textContent;
 
-      var lang = bookname.match(/\[([A-Z]{2,3})\]/);
-      lang = lang ? lang[1] : null;
+      var lang = bookname.match(/\[([a-zA-Z]{2,3})\]/);
+      lang = lang ? lang[1].toUpperCase() : null;
 
       var filterLang = lang =='TUR' || lang == 'GER' || lang == 'FR' || lang == 'FRA' || lang == 'SPA' ||
                        lang == 'ESP' || lang == 'ITA' || lang == 'POR' || lang == 'PT' || lang == 'ML' ||
@@ -271,20 +271,24 @@ function mobilismMagazineFilter() {
     });
 
     // hide the top section
-    var topSectionTable = document.querySelectorAll('#page-body > main > table')[0];
+    let topSectionTable = document.querySelectorAll('div.padding_0_40 main > table')[0];
     topSectionTable.style.display = 'none';
-    var showTopSectionButton = document.createElement('span');
-    showTopSectionButton.innerHTML = '<a href="#" type="button" class="btn" style="margin-left:10px;">Show &quot;SERVICES&quot;</a>'
+    let showTopSectionButton = document.createElement('span');
+    showTopSectionButton.innerHTML = '<a href="#" type="button" class="btn" style="margin-left:10px; margin-bottom:10px;">Show &quot;SERVICES&quot;</a>'
     showTopSectionButton.addEventListener('click', function(e) {
       e.preventDefault();
       e.stopPropagation();
       topSectionTable.style.display = '';
     });
-    var newTopButton = document.querySelector('[data-original-title="Post a new topic"]');
-    newTopButton.parentNode.insertBefore(showTopSectionButton, newTopButton.nextSibling);
+    topSectionTable.parentNode.insertBefore(showTopSectionButton, topSectionTable);
+
+    // copy the pagination to top
+    let page = document.querySelector('.pagination.pagination-small');
+    page = page.parentNode;
+    topSectionTable.parentNode.insertBefore(page.cloneNode(true), topSectionTable);
 
     // process main section
-    document.querySelectorAll('#page-body > main > table')[1].querySelector('tr:first-child th:first-child').innerHTML +=
+    document.querySelectorAll('div.padding_0_40 main > table')[1].querySelector('tr:first-child th:first-child').innerHTML +=
       '<span> - ' + blockCount + ' blocked (<a href="#" data-role="ebookworm-showlist" data-list="whitelist">' + whitelistSize + '</a>/<a href="#" data-role="ebookworm-showlist" data-list="blacklist">' + blacklistSize + '</a>)</span>' +
       ' <span><a href="#" data-role="ebookworm-showblock">Show</a></span>';
 
