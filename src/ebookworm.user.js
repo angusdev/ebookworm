@@ -306,22 +306,29 @@ function mobilismMagazineFilter() {
     });
     */
 
+    // remove duplicated
     // for (var i=1 ; i<items.blacklist.length ; i++) {
     //   if (items.blacklist[i] == items.blacklist[i-1]) {
     //     items.blacklist.splice(i-1, 1);
     //     i--;
     //   }
     // }
+
+    // remove too short
     // for (var i=1 ; i<items.blacklist.length ; i++) {
     //   if (items.blacklist[i].length <= 2) {
     //     items.blacklist.splice(i, 1);
     //     i--;
     //   }
     // }
-    // var index = items.blacklist.indexOf('TIME International Edition');
+
+    // remove an item
+    // var index = items.blacklist.indexOf('XXXXXXXXXXXXXXXXXXXXXX');
     // if (index > -1) {
     //   items.blacklist.splice(index, 1);
     // }
+
+    // save the blacklist
     // chrome.storage.local.set({blacklist:items.blacklist}, function() {
     //   if (chrome.runtime.lastError) {
     //     alert(chrome.runtime.lastError.message);
@@ -331,16 +338,21 @@ function mobilismMagazineFilter() {
     //   }
     // });
 
+    // remove duplicated
     // for (var i=1 ; i<items.whitelist.length ; i++) {
     //   if (items.whitelist[i] == items.whitelist[i-1]) {
     //     items.whitelist.splice(i-1, 1);
     //     i--;
     //   }
     // }
-    // var index = items.whitelist.indexOf('Normal Magazine Original Edition');
+
+    // remove an item
+    // var index = items.whitelist.indexOf('XXXXXXXXXXXXXXXXXXXXXX');
     // if (index > -1) {
     //   items.whitelist.splice(index, 1);
     // }
+
+    // save the whitelist
     // chrome.storage.local.set({whitelist:items.whitelist}, function() {
     //   if (chrome.runtime.lastError) {
     //     alert(chrome.runtime.lastError.message);
