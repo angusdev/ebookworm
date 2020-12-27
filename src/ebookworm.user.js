@@ -221,10 +221,10 @@ function mobilismMagazineFilter() {
       var lang = bookname.match(/\[([a-zA-Z]{2,3})\]/);
       lang = lang ? lang[1].toUpperCase() : null;
 
-      var filterLang = lang =='TUR' || lang == 'GER' || lang == 'FR' || lang == 'FRA' || lang == 'SPA' ||
-                       lang == 'ESP' || lang == 'ITA' || lang == 'POR' || lang == 'PT' || lang == 'ML' ||
-                       lang == 'MS' || lang == 'TH' || lang == 'ROM' || lang == 'FIL' || lang == 'DUT' ||
-                       lang == 'POL' || lang == 'RUS';
+      var filterLang = lang =='TUR' || lang == 'GER' || lang == 'FR' || lang == 'FRA' || lang == 'FRE' ||
+                       lang == 'SPA' || lang == 'ESP' || lang == 'ITA' || lang == 'POR' || lang == 'PT' ||
+                       lang == 'ML' || lang == 'MS' || lang == 'TH' || lang == 'ROM' || lang == 'FIL' ||
+                       lang == 'DUT' || lang == 'POL' || lang == 'RUS' || lang == 'BE';
 
       var pos = bookname.indexOf('-');
       var foundSep = false;
@@ -260,11 +260,11 @@ function mobilismMagazineFilter() {
       }
       else {
         var span = document.createElement('span');
-        span.innerHTML = '<a href="#" data-role="ebookworm-like">👍</span>';
+        span.innerHTML = '<a href="#" data-role="ebookworm-like" style="margin-right: 5px;">👍</span>';
         span.querySelector('a').setAttribute('ebookworm-block-title', bookname);
         v.parentNode.insertBefore(span, v);
         span = document.createElement('span');
-        span.innerHTML = '<a href="#" data-role="ebookworm-block">🚫</span>';
+        span.innerHTML = '<a href="#" data-role="ebookworm-block" style="margin-right: 5px;">🚫</span>';
         span.querySelector('a').setAttribute('ebookworm-block-title', bookname);
         v.parentNode.insertBefore(span, v);
       }
