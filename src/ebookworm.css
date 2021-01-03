@@ -45,9 +45,18 @@ header .leftArea .site-info {
 .mainnav > ul > li > a {
   font-size: 16px !important;
 }
-.mainnav > ul > li {
-  margin-bottom: 0 !important;
-}
 section.social-top {
   display: none;
+}
+
+@media (max-width: 979px) and (min-width: 768px) {
+
+header .leftArea {
+  float: left !important;
+}
+
+.mainnav {
+  padding-top: 40px !important;
+}
+
 }
