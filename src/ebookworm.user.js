@@ -380,14 +380,16 @@ function mobilismMagazineFilter() {
     // remove too short
     // for (var i=1 ; i<items.blacklist.length ; i++) {
     //   if (items.blacklist[i].length <= 2) {
+    //     alert('found ' + items.blacklist[i]);
     //     items.blacklist.splice(i, 1);
     //     i--;
     //   }
     // }
 
     // remove an item
-    // var index = items.blacklist.indexOf('XXXXXXXXXXXXXXXXXXXXXX');
+    // var index = items.blacklist.indexOf('XXXXX');
     // if (index > -1) {
+    //   alert('found');
     //   items.blacklist.splice(index, 1);
     // }
 
@@ -410,7 +412,7 @@ function mobilismMagazineFilter() {
     // }
 
     // remove an item
-    // var index = items.whitelist.indexOf('XXXXXXXXXXXXXXXXXXXXXX');
+    // var index = items.whitelist.indexOf('XXXXX');
     // if (index > -1) {
     //   items.whitelist.splice(index, 1);
     // }
