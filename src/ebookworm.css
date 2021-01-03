@@ -22,6 +22,10 @@
 .ebookworm-search-amazon .a-star-1-5{background-position:-223px -368px}
 .ebookworm-search-amazon .a-star-0-5{background-position:-239px -368px}
 
+.ebookworm-bookname {
+  font-weight: bold;
+  color: #448aff;
+}
 .ebookworm-block { display: none; }
 .ebookworm-like { background-color: #afa; }
 .ebookworm-watch { background-color: #ccc; }

@@ -227,7 +227,7 @@ function mobilismMagazineFilter() {
                        lang == 'ML' || lang == 'MS' || lang == 'TH' || lang == 'ROM' || lang == 'FIL' ||
                        lang == 'DUT' || lang == 'POL' || lang == 'RUS' || lang == 'BE';
 
-      var pos = bookname.indexOf('-');
+      var pos = bookname.indexOf('- ');
       var foundSep = false;
       if (pos > 0) {
         bookname = bookname.substring(0, pos).trim();
@@ -250,6 +250,14 @@ function mobilismMagazineFilter() {
 
       if (!foundSep) {
         return;
+      }
+
+      {
+        let tmpdiv = document.createElement('div');
+        tmpdiv.textContent = bookname;
+        v.innerHTML = v.innerHTML.replace(tmpdiv.innerHTML,
+          '<span class="ebookworm-bookname">' + tmpdiv.innerHTML + '</span>');
+        tmpdiv = null;
       }
 
       if (items.whitelist && items.whitelist.includes(bookname)) {
