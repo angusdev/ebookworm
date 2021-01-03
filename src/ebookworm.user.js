@@ -217,6 +217,38 @@ function mobilismMagazineFilter() {
     var whitelistSize = items.whitelist?items.whitelist.length:0;
     var greylistSize = items.greylist?items.greylist.length:0;
     document.querySelectorAll('div.padding_0_40 main > table')[1].querySelectorAll('a.topictitle').forEach(function(v, i) {
+      // remove the uploader and other information
+      {
+        let vparent = v.parentNode;
+        v = v.cloneNode(true);
+        vparent.innerHTML = '';
+        vparent.appendChild(v);
+
+        let tr = vparent;
+        while (tr && tr.tagName && tr.tagName.toLowerCase() != 'tr') {
+          tr = tr.parentNode;
+        }
+        if (tr) {
+          // second and third column
+          for (let col=1 ; col<=2 ; col++) {
+            let substats = tr.cells[col].querySelectorAll('.sub-stats');
+            let substatsinfo = tr.cells[col].querySelectorAll('.sub-stats-info');
+
+            // colume 3 doesn't have substats
+            if (substatsinfo.length >0) {
+              substats = substats.length > 0 ? substats[substats.length-1].cloneNode(true) : null;
+              substatsinfo = substatsinfo[substatsinfo.length-1].cloneNode(true);
+              tr.cells[col].innerHTML = '';
+              if (substats) {
+                tr.cells[col].appendChild(substats);
+                tr.cells[col].appendChild(document.createTextNode(' '));
+              }
+              tr.cells[col].appendChild(substatsinfo);
+            }
+          }
+        }
+      }
+
       var bookname = v.textContent;
 
       var lang = bookname.match(/\[([a-zA-Z]{2,3})\]/);
