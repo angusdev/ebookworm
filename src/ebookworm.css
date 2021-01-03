@@ -24,6 +24,7 @@
 
 .ebookworm-block { display: none; }
 .ebookworm-like { background-color: #afa; }
+.ebookworm-watch { background-color: #ccc; }
 
 /* override mobilism.org */
 .jumbotron {

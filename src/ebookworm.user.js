@@ -211,10 +211,11 @@ function mobilismAmazonRating() {
 }
 
 function mobilismMagazineFilter() {
-  chrome.storage.local.get(['blacklist', 'whitelist'], function(items) {
+  chrome.storage.local.get(['blacklist', 'whitelist', 'greylist'], function(items) {
     var blockCount = 0;
     var blacklistSize = items.blacklist?items.blacklist.length:0;
     var whitelistSize = items.whitelist?items.whitelist.length:0;
+    var greylistSize = items.greylist?items.greylist.length:0;
     document.querySelectorAll('div.padding_0_40 main > table')[1].querySelectorAll('a.topictitle').forEach(function(v, i) {
       var bookname = v.textContent;
 
@@ -254,17 +255,24 @@ function mobilismMagazineFilter() {
       if (items.whitelist && items.whitelist.includes(bookname)) {
         v.className += ' ebookworm-like';
       }
+      else if (items.greylist && items.greylist.includes(bookname)) {
+        v.className += ' ebookworm-watch';
+      }
       else if (filterLang || (items.blacklist && items.blacklist.includes(bookname))) {
         v.parentNode.parentNode.className += ' ebookworm-block';
         blockCount++;
       }
       else {
         var span = document.createElement('span');
-        span.innerHTML = '<a href="#" data-role="ebookworm-like" style="margin-right: 5px;">👍</span>';
+        span.innerHTML = '<a href="#" data-role="ebookworm-block-like-btn" data-block-action="ebookworm-like" style="margin-right: 5px;">👍</span>';
         span.querySelector('a').setAttribute('ebookworm-block-title', bookname);
         v.parentNode.insertBefore(span, v);
         span = document.createElement('span');
-        span.innerHTML = '<a href="#" data-role="ebookworm-block" style="margin-right: 5px;">🚫</span>';
+        span.innerHTML = '<a href="#" data-role="ebookworm-block-like-btn" data-block-action="ebookworm-watch" style="margin-right: 5px;">👀</span>';
+        span.querySelector('a').setAttribute('ebookworm-block-title', bookname);
+        v.parentNode.insertBefore(span, v);
+        span = document.createElement('span');
+        span.innerHTML = '<a href="#" data-role="ebookworm-block-like-btn" data-block-action="ebookworm-block" style="margin-right: 5px;">🚫</span>';
         span.querySelector('a').setAttribute('ebookworm-block-title', bookname);
         v.parentNode.insertBefore(span, v);
       }
@@ -398,15 +406,23 @@ function mobilismMagazineFilter() {
       e.preventDefault();
     }
 
-    document.querySelectorAll('[data-role="ebookworm-block"]').forEach(function(v) {
+    document.querySelectorAll('[data-block-action="ebookworm-block"]').forEach(function(v) {
       v.addEventListener('click', function(e) { onblocklike(e, 'blacklist', function(a) {
         a.parentNode.parentNode.parentNode.className += ' ebookworm-block';
       }); });
     });
 
-    document.querySelectorAll('[data-role="ebookworm-like"]').forEach(function(v) {
+    document.querySelectorAll('[data-block-action="ebookworm-like"]').forEach(function(v) {
       v.addEventListener('click', function(e) { onblocklike(e, 'whitelist', function(a) {
-        a.className += ' ebookworm-like';
+        a.parentNode.parentNode.querySelector('.topictitle').className += ' ebookworm-like';
+        a.parentNode.parentNode.querySelectorAll('[data-role="ebookworm-block-like-btn"]').forEach(v=>v.style.display = 'none');
+      }); });
+    });
+
+    document.querySelectorAll('[data-block-action="ebookworm-watch"]').forEach(function(v) {
+      v.addEventListener('click', function(e) { onblocklike(e, 'greylist', function(a) {
+        a.parentNode.parentNode.querySelector('.topictitle').className += ' ebookworm-watch';
+        a.parentNode.parentNode.querySelectorAll('[data-role="ebookworm-block-like-btn"]').forEach(v=>v.style.display = 'none');
       }); });
     });
 
