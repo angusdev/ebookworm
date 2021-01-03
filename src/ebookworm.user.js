@@ -280,7 +280,22 @@ function mobilismMagazineFilter() {
 
     // hide the top section
     let topSectionTable = document.querySelectorAll('div.padding_0_40 main > table')[0];
-    topSectionTable.style.display = 'none';
+    if (topSectionTable) {
+      topSectionTable.style.display = 'none';
+    }
+
+    // hide the top pagination
+    let firstNav = document.querySelector('.pagination-small');
+    if (firstNav) {
+      while (firstNav && firstNav.className.indexOf('row-fluid') < 0 ) {
+        firstNav = firstNav.parentNode;
+      }
+      if (firstNav) {
+        firstNav.style.display = 'none';
+      }
+    }
+
+    // add a button to show back the top section
     let showTopSectionButton = document.createElement('span');
     showTopSectionButton.innerHTML = '<a href="#" type="button" class="btn" style="margin-left:10px; margin-bottom:10px;">Show &quot;SERVICES&quot;</a>'
     showTopSectionButton.addEventListener('click', function(e) {
