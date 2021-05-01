@@ -280,6 +280,12 @@ function mobilismMagazineFilter() {
         }
       }
 
+      if (filterLang) {
+        v.parentNode.parentNode.className += ' ebookworm-block';
+        blockCount++;
+        return;
+      }
+
       if (!foundSep) {
         return;
       }
@@ -298,7 +304,7 @@ function mobilismMagazineFilter() {
       else if (items.greylist && items.greylist.includes(bookname)) {
         v.className += ' ebookworm-watch';
       }
-      else if (filterLang || (items.blacklist && items.blacklist.includes(bookname))) {
+      else if (items.blacklist && items.blacklist.includes(bookname)) {
         v.parentNode.parentNode.className += ' ebookworm-block';
         blockCount++;
       }
