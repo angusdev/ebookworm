@@ -63,7 +63,6 @@ function show(selector, isShow) {
 function mobilismAmazonRating_searchAmazon(loadingImg) {
 /* jshint validthis: true */
   var searchTerm = this.textContent.replace(/(\s+series?)*\s+by\s+/i, ', ');
-  DEBUG('https://www.amazon.com/s/?url=search-alias%3Dstripbooks&field-keywords=' + encodeURI(searchTerm));
 
   var ele = this;
   var tr = utils.parent(ele, 'tr');
@@ -71,32 +70,31 @@ function mobilismAmazonRating_searchAmazon(loadingImg) {
 
   utils.crossOriginXMLHttpRequest({
     method: 'GET',
-    url: 'https://www.amazon.com/s/?url=search-alias%3Dstripbooks&field-keywords=' + encodeURI(searchTerm),
+    url: 'https://www.amazon.com/s?k=' + encodeURI(searchTerm) + '&rh=n%3A283155&dc&qid=1631464219',
     onload: function(t) {
-      t = extract(t.responseText, '<li id="result_0"', '</li>', true);
+      t = extract(t.responseText, 'data-component-type="s-search-result"');
       if (t) {
-        var booklink = extract(extract(t, '<a class="a-link-normal s-access-detail-page ', '>'), 'href="', '"');
+        var booklink = extract(extract(extract(t, '<h2', '</h2>'), '<a class="a-link-normal a-text-normal', '>'), 'href="', '"');
         DEBUG('booklink=' + booklink);
-        var bookimg = extract(extract(t, '<img '), 'src="', '"');
+        var bookimg = extract(extract(t, 'class="s-image"'), 'src="', '"');
         DEBUG('bookimg=' + bookimg);
-        //var bookname = t.match(/<h2 class=[^>]*>([^<]*)/);
-        //bookname = bookname?bookname[1]:'';
-        var bookname = extract(extract(t, '<h2 ', '</h2>'), '>');
+        var bookname = extract(extract(t, '<h2', '</h2>'), '<span class="a-size-medium a-color-base a-text-normal">', '</span>');
         DEBUG('bookname=' + bookname);
         if (bookname && booklink) {
-          bookname = '<a target="_blank" href="' + booklink + '">' + bookname + '</a>';
+          bookname = '<a class="ebookworm-search-amazon-bookname" target="_blank" href="' + 'https://www.amazon.com' + booklink + '">' + bookname + '</a>';
         }
-        var bookauthor = extract(extract(extract(t, '<h2 class='), '<div class="a-row ', '</div>'), '>');
-        DEBUG('bookauthor=' + bookauthor);
-        if (bookauthor) {
-          bookname += ' <i style="font-size:0.8em;">' + bookauthor + '</i>';
+        var bookinfo = extract(extract(t, '<h2'), '<div class="a-row">', '</div>');
+        bookinfo = (bookinfo || '').replace(/<.*?>/g, '');
+        DEBUG('bookinfo=' + bookinfo);
+        if (bookinfo) {
+          bookname += ' <div class="ebookworm-search-amazon-bookinfo">' + bookinfo + '</div>';
         }
         var price;
-        var priceStr = extract(t, '<span class="sx-price sx-price-large">');
+        var priceStr = extract(t, '<span class="a-price-whole">');
         if (priceStr) {
-          price = extract(priceStr, '<span class="sx-price-whole">', '</span>');
+          price = extract(priceStr, null, '<');
           if (price) {
-            var price2 = extract(priceStr, '<sup class="sx-price-fractional">', '</sup>');
+            var price2 = extract(priceStr, '<span class="a-price-fraction">', '</span>');
             if (price2) {
               price += '.' + price2;
             }
@@ -107,17 +105,17 @@ function mobilismAmazonRating_searchAmazon(loadingImg) {
         //   span > span > a
         //     i.a-icon.a-icon-star.a-icon-star-x    <-- rating
         //   a    <-- review count
-        var rating = extract(t, '<i class="a-icon a-icon-star ', '>');
+        var rating = extract(t, '<i class="a-icon a-icon-star-small ', '>');
         if (rating) {
           rating = '<i class="a-icon a-icon-star ' + rating + '></i>';
         }
         DEBUG('rating=' + rating);
-        var review = extract(extract(t, '<i class="a-icon a-icon-star ', '</div>'), '#customerReviews">', '</a>');
+        var review = extract(extract(t, '<i class="a-icon a-icon-popover"'), '<span class="a-size-base">', '</span>');
         DEBUG('review=' + review);
         if (bookimg) {
           // smaller image size
           bookimg = bookimg.replace(/,.*\.jpg/, '.jpg').replace('160', '100');
-          ele.innerHTML = '<img style="float:left;" src="' + bookimg + '"/>';
+          ele.innerHTML = '<img class="ebookworm-search-amazon-cover" src="' + bookimg + '"/>';
         }
         if (bookname) {
           ele.innerHTML += bookname + (price?'<br/>$' + price:'') + (rating?('<br/>' + rating + (review?' (' + review + ')':'')):'');
