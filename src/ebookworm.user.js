@@ -72,9 +72,10 @@ function mobilismAmazonRating_searchAmazon(loadingImg) {
     method: 'GET',
     url: 'https://www.amazon.com/s?k=' + encodeURI(searchTerm) + '&rh=n%3A283155&dc&qid=1631464219',
     onload: function(t) {
-      t = extract(t.responseText, 'data-component-type="s-search-result"');
+      t = extract(extract(t.responseText, 'data-component-type="s-search-result"'), 'class="s-result-item');
+      t = extract(t, null, 'class="s-result-item') || t;
       if (t) {
-        var booklink = extract(extract(extract(t, '<h2', '</h2>'), '<a class="a-link-normal a-text-normal', '>'), 'href="', '"');
+        var booklink = extract(extract(extract(t, '<h2', '</h2>'), '<a class="a-link-normal', '>'), 'href="', '"');
         DEBUG('booklink=' + booklink);
         var bookimg = extract(extract(t, 'class="s-image"'), 'src="', '"');
         DEBUG('bookimg=' + bookimg);
@@ -89,17 +90,10 @@ function mobilismAmazonRating_searchAmazon(loadingImg) {
         if (bookinfo) {
           bookname += ' <div class="ebookworm-search-amazon-bookinfo">' + bookinfo + '</div>';
         }
-        var price;
-        var priceStr = extract(t, '<span class="a-price-whole">');
-        if (priceStr) {
-          price = extract(priceStr, null, '<');
-          if (price) {
-            var price2 = extract(priceStr, '<span class="a-price-fraction">', '</span>');
-            if (price2) {
-              price += '.' + price2;
-            }
-            DEBUG('price=' + price);
-          }
+        var price = extract(extract(t, 'Paperback</a>'), '<span class="a-price"');
+        if (price) {
+          price = extract(price, '<span class="a-offscreen">$', '</span>');
+          DEBUG('price=' + price);
         }
         // div
         //   span > span > a
@@ -110,7 +104,7 @@ function mobilismAmazonRating_searchAmazon(loadingImg) {
           rating = '<i class="a-icon a-icon-star ' + rating + '></i>';
         }
         DEBUG('rating=' + rating);
-        var review = extract(extract(t, '<i class="a-icon a-icon-popover"'), '<span class="a-size-base">', '</span>');
+        var review = extract(extract(extract(t, '<i class="a-icon a-icon-popover"'), '<span class="a-size-base', '</span>'), '>');
         DEBUG('review=' + review);
         if (bookimg) {
           // smaller image size
